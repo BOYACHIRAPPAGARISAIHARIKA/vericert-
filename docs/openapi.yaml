@@ -1,0 +1,69 @@
+openapi: 3.0.0
+info:
+  title: Vericert API
+  version: 1.0.0
+paths:
+  /verify:
+    post:
+      summary: Verify a certificate
+      description: Endpoint to verify the authenticity of a certificate.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                certificateId:
+                  type: string
+                userId:
+                  type: string
+      responses:
+        '200':
+          description: Verification successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  verified:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "Certificate is valid"
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Invalid certificate ID"
+  /health:
+    get:
+      summary: Health check
+      description: Check the health status of the API.
+      responses:
+        '200':
+          description: API is up and running
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "Healthy"
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Internal server error"
